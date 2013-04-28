@@ -50,7 +50,7 @@ spamcop_status=$?
 # If exit status is 0, then the server is blacklisted.
 if [ $spamcop_status -eq 0  ]
 then
-echo "The server with $IP is blacklisted in SpamCop. It means that your server is sending spam mails. Stop spamming in your server and whitelist it in : http://www.spamcop.net/bl.shtml" >> /tmp/blstatus.txt
+echo "The server with IP $IP is blacklisted in SpamCop. It means that your server is sending spam mails. Stop spamming in your server and whitelist it in : http://www.spamcop.net/bl.shtml" >> /tmp/blstatus.txt
 echo " " >> /tmp/blstatus.txt
 fi
 
@@ -62,7 +62,7 @@ ironport_status=$?
 # If exit status is 0, then the server is blacklisted.
 if [ $ironport_status -eq 0 ]
 then
-echo "The server with $IP has Poor reputation in Cisco Ironport. It means that your server is sending spam mails. Stop spamming in your server. For more details click: http://www.senderbase.org/senderbase_queries/detailip?search_string=$IP" >> /tmp/blstatus.txt
+echo "The server with IP $IP has Poor reputation in Cisco Ironport. It means that your server is sending spam mails. Stop spamming in your server. For more details click: http://www.senderbase.org/senderbase_queries/detailip?search_string=$IP" >> /tmp/blstatus.txt
 echo " " >> /tmp/blstatus.txt
 fi
 
@@ -73,7 +73,7 @@ spamalert=`expr $spamcop_status + $ironport_status`
 # If the sum of exit status of both blacklists is less than 2, IP is blacklisted in one of ( or both) blacklists. In this case, send the alert mail.
 if [ $spamalert -lt 2 ]
 then
-mail -s "Important :: Your server with $IP is blacklisted" $email < /tmp/blstatus.txt
+mail -s "Important :: Your server with IP $IP is blacklisted" $email < /tmp/blstatus.txt
 rm -f /tmp/blstatus.txt
 fi
 
